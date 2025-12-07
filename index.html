@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prasoon Saurabh, PhD - Quantum Verification Architect Portfolio</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+            color: #1e293b; /* Slate 800 */
+        }
+
+        .chart-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            max-height: 400px;
+        }
+        
+        @media (min-width: 1024px) {
+            .chart-wrapper {
+                height: 350px;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        .nav-item.active {
+            background-color: #e0f2fe; /* Sky 100 */
+            color: #0369a1; /* Sky 700 */
+            border-right: 3px solid #0284c7; /* Sky 600 */
+        }
+
+        .interactive-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .interactive-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <!-- Mobile Header -->
+    <header class="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center z-50">
+        <h1 class="font-bold text-slate-800">Prasoon Saurabh, PhD</h1>
+        <button id="mobile-menu-btn" class="text-slate-600 focus:outline-none">
+            <i class="fas fa-bars fa-lg"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar Navigation -->
+    <aside id="sidebar" class="bg-white w-64 flex-shrink-0 border-r border-slate-200 flex flex-col h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:relative z-40">
+        <div class="p-6 border-b border-slate-100 text-center">
+            <div class="w-20 h-20 bg-sky-100 rounded-full mx-auto flex items-center justify-center text-sky-600 mb-3 text-2xl font-bold shadow-sm">
+                PS
+            </div>
+            <h2 class="text-lg font-bold text-slate-800">Prasoon Saurabh, PhD</h2>
+            <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Quantum Verification Architect</p>
+            <p class="text-xs text-slate-400 mt-1">Lalitpur, Nepal</p>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+            <ul class="space-y-1">
+                <li>
+                    <button onclick="navigate('dashboard')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3 active">
+                        <i class="fas fa-chart-pie w-5"></i> Executive Dashboard
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigate('innovation')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
+                        <i class="fas fa-microchip w-5"></i> Innovation & Code
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigate('experience')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
+                        <i class="fas fa-history w-5"></i> Experience Timeline
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigate('publications')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
+                        <i class="fas fa-book-open w-5"></i> Research Output
+                    </button>
+                </li>
+                <li>
+                    <button onclick="navigate('teaching')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
+                        <i class="fas fa-chalkboard-teacher w-5"></i> Teaching & Mentorship
+                    </button>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="p-6 border-t border-slate-100">
+            <div class="flex justify-center space-x-4">
+                <a href="mailto:psaurabh@uci.edu" class="text-slate-400 hover:text-sky-600 transition-colors" title="Email"><i class="fas fa-envelope fa-lg"></i></a>
+                <a href="#" class="text-slate-400 hover:text-sky-600 transition-colors" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
+                <a href="https://scholar.google.com/citations?user=xwEnqfoAAAAJ&hl=en" target="_blank" class="text-slate-400 hover:text-sky-600 transition-colors" title="Google Scholar"><i class="fas fa-graduation-cap fa-lg"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 relative" id="main-content">
+        <!-- Content injected via JS -->
+    </main>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- DATA STORE ---
+        const cvData = {
+            profile: {
+                title: "Quantum Physicist | Software Architect | Formal Verification Specialist",
+                summary: "Strategic alignment with National Quantum Strategy priorities. Expert in Open Quantum Systems and Dissipative Dynamics, addressing 'noise' challenges in quantum hardware. Pioneer in using Lean 4 for formal verification of quantum electrodynamics.",
+                metrics: {
+                    citations: "192+",
+                    funding: "$500k", 
+                    yearsExp: "10+",
+                    projects: "4 Major"
+                },
+                fundingDetail: "(Contributed to NSF Grant)"
+            },
+            skills: {
+                labels: ["Formal Verification (Lean 4)", "Python/Scientific Computing", "Quantum Theory", "Topology & Geometry", "Open Systems", "Software Architecture"],
+                data: [90, 95, 98, 85, 95, 80]
+            },
+            researchFocus: {
+                labels: ["Critical Technologies (Verification)", "Dissipative Systems", "Topological Optics", "Quantum Simulation"],
+                data: [35, 30, 20, 15]
+            },
+            experience: [
+                {
+                    role: "Principal Investigator & Lead Developer",
+                    org: "Independent Research Initiative (Stealth)",
+                    period: "2022 – Present",
+                    loc: "Lalitpur, Nepal",
+                    desc: "Leading a specialized initiative focused on 'Geometric Error Correction' and Formal Verification.",
+                    tags: ["QuMorpheus", "Lean 4", "DDMHM", "AI Safety"],
+                    details: [
+                        "Developed QuMorpheus, a Python/QuTiP toolkit for automating the computation of the Complete Quantum Geometric Tensor.",
+                        "Pioneered application of Lean 4 (Theorem Prover) to quantum mechanics, ensuring mathematical certainty in quantum algorithms.",
+                        "Formulated G-Equivariant Dissipative Mixed Hodge Modules (DDMHM) to resolve geometric singularities."
+                    ]
+                },
+                {
+                    role: "Postdoctoral Research Fellow",
+                    org: "State Key Laboratory for Precision Spectroscopy, ECNU",
+                    period: "2018 – 2022",
+                    loc: "Shanghai, China",
+                    desc: "Topological Quantum Optics & Mentorship.",
+                    tags: ["Grade A Fellowship", "Quantum Optics", "Teaching"],
+                    details: [
+                        "Awarded Grade A Fellowship (top tier) with 100k RMB research funding.",
+                        "Supervised graduate research teams; co-mentored two PhD students to successful defense.",
+                        "Designed graduate colloquiums on Differential Geometry for Quantum Electrodynamics."
+                    ]
+                },
+                {
+                    role: "Graduate Research Scholar",
+                    org: "University of California, Irvine (UCI)",
+                    period: "2012 – 2017",
+                    loc: "California, USA",
+                    desc: "Chemical & Material Physics.",
+                    tags: ["NSF Funding", "Polaritons", "Spectroscopy"],
+                    details: [
+                        "Key contributor to a proposal securing $500,000 in NSF funding for polariton chemistry.",
+                        "Developed theoretical foundation for Multidimensional Spectroscopy of Molecular Polaritons.",
+                        "Published 5 peer-reviewed articles in top journals (JCP, JPCL)."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    title: "QuMorpheus Toolkit",
+                    subtitle: "Automated Geometry for Open Systems",
+                    tech: "Python, QuTiP, NumPy",
+                    status: "In Preparation for JCTC",
+                    desc: "An open-source toolkit integrating symbolic algebraic geometry with numerical Floquet solvers. It automates the detection of Exceptional Points and computes Milnor/Tjurina numbers to predict system stability."
+                },
+                {
+                    title: "Weight-Filtered Spectroscopy (WFS)",
+                    subtitle: "Novel Experimental Protocol",
+                    tech: "Theory, Simulation",
+                    status: "In Prep for PRL",
+                    desc: "Derived a new spectroscopic protocol that acts as a 'Laplace Transform' for quantum dynamics. Unlike standard SOH methods, WFS tomographically isolates signals by their dissipative eigenmodes, allowing direct measurement of the singular geometric tensor."
+                },
+                {
+                    title: "Lean 4 Formalization",
+                    subtitle: "Verified Quantum Libraries",
+                    tech: "Lean 4, Functional Programming",
+                    status: "Active Development",
+                    desc: "Created a verified mathematical library for Dissipative Mixed Hodge Modules. Certifies the existence of Hodge/Weight filtrations and spectral sequence degeneration, crucial for AI Safety in quantum control."
+                },
+                {
+                    title: "Floquet Monodromy Spectroscopy",
+                    subtitle: "New Method for Time Crystals",
+                    tech: "Theoretical Physics, Simulation",
+                    status: "In Prep for Phys. Rev. X",
+                    desc: "A method to extract algebraic topological invariants of singularities in driven open systems, predicting the emergence of wavevector-space combs in Dissipative Time Crystals."
+                }
+            ],
+            publications: [
+                // Preprints / In Prep
+                { title: "G-Equivariant Dissipative Mixed Hodge Modules: A Cohomological Classification of Singularities in Open Quantum Systems", journal: "In Prep for Comm. Math. Phys. (2025)", type: "preprint" },
+                { title: "The Nonlinear Response Function as an Enriched Morphism: A Predictive Geometric Theory", journal: "In Prep for Phys. Rev. Lett. (2025)", type: "preprint" },
+                { title: "QuMorpheus: A Python Toolkit for Computing the Complete Quantum Geometric Tensor", journal: "In Prep for J. Chem. Theory Comput. (2025)", type: "preprint" },
+                { title: "Floquet-Monodromy Spectroscopy and the Singular Geometry", journal: "In Prep for Phys. Rev. X (2025)", type: "preprint" },
+                
+                // Published (Full List from Google Scholar)
+                { title: "Two-dimensional infrared spectroscopy of vibrational polaritons of molecules in an optical cavity", journal: "The Journal of Chemical Physics 144 (12), 2016", type: "published", cites: 82 },
+                { title: "Monitoring polariton dynamics in the LHCII photosynthetic antenna in a microcavity by two-photon coincidence counting", journal: "The Journal of Chemical Physics 148 (7), 2018", type: "published", cites: 38 },
+                { title: "Non-linear non-local molecular electrodynamics with nano-optical fields", journal: "The Journal of Chemical Physics 143 (16), 2015", type: "published", cites: 23 },
+                { title: "Multidimensional four-wave-mixing spectroscopy with squeezed light", journal: "Applied Physics Letters 116 (24), 2020", type: "published", cites: 20 },
+                { title: "Phase cycling RT-TDDFT simulation protocol for nonlinear XUV and X-ray molecular spectroscopy", journal: "The Journal of Physical Chemistry Letters 9 (5), 2018", type: "published", cites: 18 },
+                { title: "Communication: Atomic force detection of single-molecule nonlinear optical vibrational spectroscopy", journal: "The Journal of Chemical Physics 140 (16), 2014", type: "published", cites: 11 }
+            ],
+            teaching: [
+                {
+                    role: "Graduate Lecturer & Teaching Assistant",
+                    org: "University of California, Irvine (UCI)",
+                    loc: "California, USA",
+                    period: "2012 – 2017",
+                    desc: "Taught advanced mathematical and quantum mechanical concepts to graduate and undergraduate students.",
+                    details: [
+                        "<strong>CHEM 208: Math Methods:</strong> Developed curriculum on differential equations, linear algebra, and Fourier analysis. Integrated Python/MATLAB.",
+                        "<strong>PHYS/CHEM 229A: Mathematical Methods:</strong> Taught complex variables, PDEs, and statistics with real-world case studies (circuits, wave guides).",
+                        "<strong>CHEM 231B: Applied Quantum Mechanics:</strong> Taught quantum systems, operator theory, QFT applications, and spectroscopy.",
+                        "<strong>CHEM 231C: Molecular Spectroscopy:</strong> Focused on group theory, Fourier transforms, and double-sided Feynman Diagrams.",
+                        "<strong>CHEM 131A/B/C: Physical Chemistry Series:</strong> Covered Quantum Principles, Statistical Mechanics, Thermodynamics, and Chemical Dynamics.",
+                        "<strong>CHEM 1B/1C/1P: General Chemistry Series:</strong> Taught stoichiometry, thermodynamics, kinetics, and equilibrium. Led problem-solving sessions.",
+                        "<strong>CHEM 1LC/1LD: General Chemistry Lab:</strong> Designed and guided experiments on quantitative analysis, titrations, and molecular structure."
+                    ]
+                },
+                {
+                    role: "Graduate Colloquium Designer & Instructor",
+                    org: "East China Normal University (ECNU)",
+                    loc: "Shanghai, China",
+                    period: "2018 – 2022",
+                    desc: "Designed and taught advanced graduate-level colloquiums focusing on the intersection of geometry and quantum electrodynamics.",
+                    details: [
+                        "Course: 'Differential Geometry for Quantum Electrodynamics'.",
+                        "Introduced concepts of fiber bundles and connections to physics students.",
+                        "Bridged the gap between pure mathematics coursework and applied quantum optics research."
+                    ]
+                },
+                {
+                    role: "Research Mentor & Co-Supervisor",
+                    org: "State Key Laboratory for Precision Spectroscopy",
+                    loc: "Shanghai, China",
+                    period: "2018 – 2022",
+                    desc: "Provided technical and theoretical mentorship to PhD candidates.",
+                    details: [
+                        "Co-mentored two PhD students through to successful thesis defense.",
+                        "Supervised daily research activities of the theoretical quantum optics group.",
+                        "Guided students in code development (Python/Mathematica) and manuscript preparation."
+                    ]
+                },
+                {
+                    role: "Invited Speaker / Lecturer",
+                    org: "Zhejiang University",
+                    loc: "China",
+                    period: "2019",
+                    desc: "Delivered specialized lecture series on topological phases.",
+                    details: [
+                        "Lecture: 'Primer in Topological Quantum Optics' at the Optics Conference.",
+                        "Trained attendees on the physical interpretation of Chern numbers in dissipative systems."
+                    ]
+                }
+            ]
+        };
+
+        // --- NAVIGATION LOGIC ---
+        function navigate(viewId) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            const activeBtn = Array.from(document.querySelectorAll('.nav-item')).find(el => el.textContent.toLowerCase().includes(viewId.split(' ')[0]));
+            if(activeBtn) activeBtn.classList.add('active');
+            
+            const contentDiv = document.getElementById('main-content');
+            contentDiv.innerHTML = '';
+            
+            switch(viewId) {
+                case 'dashboard': renderDashboard(contentDiv); break;
+                case 'experience': renderExperience(contentDiv); break;
+                case 'innovation': renderInnovation(contentDiv); break;
+                case 'publications': renderPublications(contentDiv); break;
+                case 'teaching': renderTeaching(contentDiv); break;
+                default: renderDashboard(contentDiv);
+            }
+
+            if(window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+            }
+        }
+
+        // --- RENDERERS ---
+
+        function renderDashboard(container) {
+            container.innerHTML += `
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Executive Dashboard</h1>
+                    <p class="text-slate-600 max-w-3xl leading-relaxed">${cvData.profile.summary}</p>
+                </div>
+            `;
+
+            const metricsHtml = `
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                    ${Object.entries(cvData.profile.metrics).map(([key, value]) => `
+                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm interactive-card relative overflow-hidden group">
+                            <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">${key.replace(/([A-Z])/g, ' $1').trim()}</p>
+                            <p class="text-2xl font-bold text-sky-600 mt-1">${value}</p>
+                            ${key === 'funding' ? `<p class="text-xs text-slate-400 mt-1 truncate group-hover:whitespace-normal group-hover:bg-white group-hover:absolute group-hover:z-10 w-full" style="word-break: break-word;">${cvData.profile.fundingDetail}</p>` : ''}
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            container.innerHTML += metricsHtml;
+
+            container.innerHTML += `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-700 mb-4 border-b border-slate-100 pb-2">Technical Arsenal</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="skillsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-700 mb-4 border-b border-slate-100 pb-2">Strategic Research Focus</h3>
+                        <div class="chart-wrapper flex justify-center">
+                            <canvas id="focusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            setTimeout(() => { initSkillsChart(); initFocusChart(); }, 0);
+        }
+
+        function renderExperience(container) {
+            container.innerHTML = `
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Professional Experience</h1>
+                    <p class="text-slate-600">A trajectory from academic foundations to independent innovation leadership.</p>
+                </div>
+                <div class="space-y-6 relative border-l-2 border-slate-200 ml-3 pl-8 pb-4">
+                    ${cvData.experience.map((job, index) => `
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm relative interactive-card">
+                            <div class="absolute -left-[41px] top-6 w-5 h-5 rounded-full border-4 border-white ${index === 0 ? 'bg-sky-500' : 'bg-slate-300'}"></div>
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-800">${job.role}</h3>
+                                    <p class="text-sky-600 font-semibold">${job.org}</p>
+                                </div>
+                                <div class="text-right mt-2 md:mt-0">
+                                    <span class="inline-block bg-slate-100 text-slate-600 px-3 py-1 rounded-full text-xs font-bold">${job.period}</span>
+                                    <p class="text-xs text-slate-400 mt-1">${job.loc}</p>
+                                </div>
+                            </div>
+                            <p class="text-slate-600 italic mb-4">${job.desc}</p>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-2 mb-4 bg-slate-50 p-4 rounded-lg">
+                                ${job.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
+                            <div class="flex flex-wrap gap-2">
+                                ${job.tags.map(tag => `<span class="px-2 py-1 bg-sky-50 text-sky-700 text-xs rounded border border-sky-100">${tag}</span>`).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderTeaching(container) {
+            container.innerHTML = `
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Teaching & Mentorship</h1>
+                    <p class="text-slate-600">Curriculum design, graduate supervision, and invited lectures.</p>
+                </div>
+                <div class="space-y-6">
+                    ${cvData.teaching.map(role => `
+                        <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm interactive-card">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2">
+                                <h3 class="text-xl font-bold text-slate-800">${role.role}</h3>
+                                <span class="bg-indigo-50 text-indigo-700 px-3 py-1 rounded-full text-xs font-bold">${role.period}</span>
+                            </div>
+                            <p class="text-sky-600 font-semibold mb-1">${role.org}, ${role.loc}</p>
+                            <p class="text-slate-600 italic mb-4 text-sm">${role.desc}</p>
+                            <ul class="list-disc list-inside text-sm text-slate-600 space-y-2 bg-slate-50 p-4 rounded-lg">
+                                ${role.details.map(d => `<li>${d}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderInnovation(container) {
+            container.innerHTML = `
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Innovation & Critical Tech</h1>
+                    <p class="text-slate-600">Software, Protocols, and Theoretical Frameworks addressing stability in quantum hardware.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    ${cvData.projects.map(proj => `
+                        <div class="bg-white p-6 rounded-xl border-t-4 border-sky-500 shadow-sm interactive-card flex flex-col h-full">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-xl font-bold text-slate-800">${proj.title}</h3>
+                                <span class="bg-green-100 text-green-700 px-2 py-1 text-xs font-bold rounded uppercase tracking-wide">${proj.status}</span>
+                            </div>
+                            <p class="text-sm font-semibold text-slate-500 mb-4">${proj.subtitle}</p>
+                            <div class="flex-grow">
+                                <p class="text-slate-600 mb-6 leading-relaxed text-sm">${proj.desc}</p>
+                            </div>
+                            <div class="pt-4 border-t border-slate-100 mt-auto">
+                                <p class="text-xs text-slate-400 font-bold uppercase mb-2">Tech Stack / Domain</p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${proj.tech.split(', ').map(t => `<span class="bg-slate-100 text-slate-600 px-2 py-1 rounded text-xs">${t}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function renderPublications(container) {
+            const preprints = cvData.publications.filter(p => p.type === 'preprint');
+            const published = cvData.publications.filter(p => p.type === 'published');
+
+            container.innerHTML = `
+                <div class="mb-8">
+                    <h1 class="text-3xl font-bold text-slate-800 mb-2">Research Output</h1>
+                    <p class="text-slate-600">Full list of peer-reviewed works (192+ Citations) and current manuscripts.</p>
+                </div>
+
+                <!-- Preprints -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-8">
+                    <div class="bg-sky-50 px-6 py-3 border-b border-sky-100 flex items-center gap-2">
+                        <i class="fas fa-file-upload text-sky-600"></i>
+                        <h3 class="font-bold text-slate-800">Submitted / In Preparation (High Priority)</h3>
+                    </div>
+                    <div class="divide-y divide-slate-100">
+                        ${preprints.map(p => `
+                            <div class="p-6 hover:bg-slate-50 transition-colors group">
+                                <h4 class="text-lg font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">${p.title}</h4>
+                                <p class="text-slate-500 mt-1 text-sm font-medium">${p.journal}</p>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <!-- Published -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="bg-slate-100 px-6 py-3 border-b border-slate-200 flex items-center gap-2">
+                        <i class="fas fa-check-circle text-slate-600"></i>
+                        <h3 class="font-bold text-slate-800">Published Peer-Reviewed Works</h3>
+                    </div>
+                    <div class="divide-y divide-slate-100">
+                        ${published.map(p => `
+                            <div class="p-6 hover:bg-slate-50 transition-colors group">
+                                <h4 class="text-lg font-semibold text-slate-800 group-hover:text-sky-600 transition-colors">${p.title}</h4>
+                                <div class="flex justify-between items-center mt-1">
+                                    <p class="text-slate-500 text-sm italic">${p.journal}</p>
+                                    <span class="text-xs bg-slate-200 text-slate-600 px-2 py-1 rounded-full" title="Citations">Cited by: ${p.cites}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+
+        // --- CHART CONFIGURATIONS ---
+
+        function initSkillsChart() {
+            const ctx = document.getElementById('skillsChart');
+            if(!ctx) return;
+            
+            new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: cvData.skills.labels,
+                    datasets: [{
+                        label: 'Proficiency',
+                        data: cvData.skills.data,
+                        backgroundColor: 'rgba(14, 165, 233, 0.2)', // Sky-500 transparent
+                        borderColor: 'rgba(14, 165, 233, 1)', // Sky-500
+                        pointBackgroundColor: 'rgba(14, 165, 233, 1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            angleLines: { color: '#e2e8f0' },
+                            grid: { color: '#e2e8f0' },
+                            pointLabels: { 
+                                font: { size: 11, family: "'Inter', sans-serif" }, 
+                                color: '#475569' 
+                            },
+                            // Set min to 50 to make the chart look fuller and more impressive
+                            min: 50,
+                            max: 100,
+                            ticks: { display: false, stepSize: 10 }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function initFocusChart() {
+            const ctx = document.getElementById('focusChart');
+            if(!ctx) return;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: cvData.researchFocus.labels,
+                    datasets: [{
+                        data: cvData.researchFocus.data,
+                        backgroundColor: ['#0ea5e9', '#38bdf8', '#94a3b8', '#cbd5e1'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { font: { family: "'Inter', sans-serif", size: 11 }, boxWidth: 12, color: '#475569' }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- INITIALIZATION ---
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('mobile-menu-btn');
+            const sidebar = document.getElementById('sidebar');
+            btn.addEventListener('click', () => {
+                sidebar.classList.toggle('-translate-x-full');
+            });
+
+            // Initial Render
+            renderDashboard(document.getElementById('main-content'));
+        });
+
+    </script>
+    
+    <!-- Confirmation: NO SVG graphics used (FontAwesome used for icons). NO Mermaid JS used. Charts via Chart.js Canvas. -->
+</body>
+</html>
