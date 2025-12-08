@@ -66,9 +66,28 @@
             white-space: normal;
             line-height: 1.2;
         }
+
+        /* Responsive Sidebar Styles */
+        @media (max-width: 768px) {
+            #sidebar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                z-index: 1000;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease-in-out;
+            }
+            #sidebar.open {
+                transform: translateX(0);
+            }
+            .chart-wrapper {
+                height: 250px; /* Smaller height for mobile charts */
+            }
+        }
     </style>
 </head>
-<body class="h-screen flex overflow-hidden">
+<body class="h-screen flex flex-col md:flex-row overflow-hidden">
 
     <!-- Mobile Header -->
     <header class="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center z-50">
@@ -79,7 +98,7 @@
     </header>
 
     <!-- Sidebar Navigation -->
-    <aside id="sidebar" class="bg-white w-64 flex-shrink-0 border-r border-slate-200 flex flex-col h-full transform -translate-x-full md:translate-x-0 transition-transform duration-300 fixed md:relative z-40">
+    <aside id="sidebar" class="bg-white w-64 flex-shrink-0 border-r border-slate-200 flex flex-col h-full md:relative z-40">
         <div class="p-6 border-b border-slate-100 text-center">
             <div class="w-20 h-20 bg-sky-100 rounded-full mx-auto flex items-center justify-center text-sky-600 mb-3 text-2xl font-bold shadow-sm">
                 PS
@@ -128,8 +147,11 @@
         </div>
     </aside>
 
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-30 hidden md:hidden"></div>
+
     <!-- Main Content Area -->
-    <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 relative" id="main-content">
+    <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 relative w-full" id="main-content">
         <!-- Content injected via JS -->
     </main>
 
@@ -316,8 +338,17 @@
             }
 
             if(window.innerWidth < 768) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
+                closeMobileMenu();
             }
+        }
+        
+        function closeMobileMenu() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobile-menu-overlay');
+            sidebar.classList.remove('open');
+            // Stick to translate toggle:
+            sidebar.classList.add('-translate-x-full');
+            overlay.classList.add('hidden');
         }
 
         // --- RENDERERS ---
@@ -570,9 +601,28 @@
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('mobile-menu-btn');
             const sidebar = document.getElementById('sidebar');
-            btn.addEventListener('click', () => {
+            const overlay = document.getElementById('mobile-menu-overlay');
+
+            function toggleMenu() {
+                // We'll toggle both a custom class and the translate utility
+                // But specifically for this setup:
                 sidebar.classList.toggle('-translate-x-full');
-            });
+                
+                // Also toggle the overlay visibility
+                if (overlay.classList.contains('hidden')) {
+                    overlay.classList.remove('hidden');
+                } else {
+                    overlay.classList.add('hidden');
+                }
+            }
+
+            if (btn) {
+                btn.addEventListener('click', toggleMenu);
+            }
+            
+            if (overlay) {
+                overlay.addEventListener('click', toggleMenu); // Close when clicking outside
+            }
 
             // Initial Render
             renderDashboard(document.getElementById('main-content'));
