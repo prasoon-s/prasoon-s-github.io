@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Prasoon Saurabh, PhD | Quantum Verification Architect</title>
+    <!-- Viewport settings for perfect mobile scaling -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Prasoon Saurabh | Quantum Architect</title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -23,6 +24,7 @@
             font-family: 'Inter', sans-serif;
             background-color: #f8fafc; /* Slate 50 */
             color: #1e293b; /* Slate 800 */
+            -webkit-tap-highlight-color: transparent; /* Remove blue highlight on mobile tap */
         }
         h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
@@ -30,7 +32,7 @@
         .chart-wrapper {
             position: relative;
             width: 100%;
-            height: 300px;
+            height: 250px; /* Mobile default */
             max-height: 400px;
         }
         @media (min-width: 1024px) {
@@ -59,84 +61,75 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
         
-        /* Specific Fix for Funding Text Overflow */
-        .funding-detail {
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            white-space: normal;
-            line-height: 1.2;
-        }
-
-        /* Sidebar Transition */
+        /* Mobile Sidebar Transitions */
         #sidebar {
-            transition: transform 0.3s ease-in-out;
-        }
-        
-        /* Mobile Overlay */
-        #mobile-overlay {
-            transition: opacity 0.3s ease-in-out;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
     </style>
 </head>
-<body class="h-screen flex flex-col md:flex-row overflow-hidden">
+<body class="h-screen flex flex-col md:flex-row overflow-hidden bg-slate-50">
 
     <!-- Mobile Header (Fixed Top) -->
-    <header class="md:hidden bg-white border-b border-slate-200 p-4 flex justify-between items-center z-50 fixed w-full top-0 left-0 h-16">
+    <header class="md:hidden bg-white border-b border-slate-200 px-4 py-3 flex justify-between items-center z-50 fixed w-full top-0 left-0 shadow-sm h-16">
         <h1 class="font-bold text-slate-800 text-lg truncate">Prasoon Saurabh, PhD</h1>
-        <button id="mobile-menu-btn" class="text-slate-600 focus:outline-none p-2 rounded hover:bg-slate-100">
+        <!-- Hamburger Button -->
+        <button id="mobile-menu-btn" class="text-slate-600 focus:outline-none p-2 rounded hover:bg-slate-100 active:bg-slate-200 transition-colors" aria-label="Toggle Menu">
             <i class="fas fa-bars fa-lg"></i>
         </button>
     </header>
 
-    <!-- Mobile Overlay -->
-    <div id="mobile-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden md:hidden"></div>
+    <!-- Mobile Overlay (Darkens background when menu is open) -->
+    <div id="mobile-overlay" class="fixed inset-0 bg-black/50 z-40 hidden transition-opacity duration-300 backdrop-blur-sm md:hidden"></div>
 
     <!-- Sidebar Navigation -->
-    <!-- Added 'pt-16 md:pt-0' to account for fixed header on mobile -->
-    <aside id="sidebar" class="bg-white w-64 flex-shrink-0 border-r border-slate-200 flex flex-col h-full fixed md:relative z-50 transform -translate-x-full md:translate-x-0 top-0 left-0 pt-0">
+    <!-- Note: -translate-x-full hides it by default on mobile. md:translate-x-0 shows it on desktop. -->
+    <aside id="sidebar" class="bg-white w-64 flex-shrink-0 border-r border-slate-200 flex flex-col h-full fixed md:relative z-50 transform -translate-x-full md:translate-x-0 top-0 left-0 pt-0 shadow-xl md:shadow-none">
         
-        <!-- Sidebar Header (Hidden on Mobile to save space, or visible if you prefer) -->
-        <div class="p-6 border-b border-slate-100 text-center md:block pt-20 md:pt-6">
+        <!-- Sidebar Header -->
+        <div class="p-6 border-b border-slate-100 text-center pt-20 md:pt-6">
             <div class="w-20 h-20 bg-sky-100 rounded-full mx-auto flex items-center justify-center text-sky-600 mb-3 text-2xl font-bold shadow-sm">
                 PS
             </div>
             <h2 class="text-lg font-bold text-slate-800">Prasoon Saurabh</h2>
-            <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Quantum Verification Architect</p>
+            <p class="text-xs text-slate-500 font-semibold uppercase tracking-wider mt-1">Quantum Architect</p>
             <p class="text-xs text-slate-400 mt-1">Lalitpur, Nepal</p>
         </div>
 
+        <!-- Nav Links -->
         <nav class="flex-1 overflow-y-auto py-4">
             <ul class="space-y-1">
                 <li>
-                    <button onclick="navigate('dashboard')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3 active">
-                        <i class="fas fa-chart-pie w-5"></i> Executive Dashboard
+                    <button onclick="navigate('dashboard')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3 active" id="nav-dashboard">
+                        <i class="fas fa-chart-pie w-5 text-center"></i> Executive Dashboard
                     </button>
                 </li>
                 <li>
-                    <button onclick="navigate('innovation')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
-                        <i class="fas fa-microchip w-5"></i> Innovation & Code
+                    <button onclick="navigate('innovation')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3" id="nav-innovation">
+                        <i class="fas fa-microchip w-5 text-center"></i> Innovation & Code
                     </button>
                 </li>
                 <li>
-                    <button onclick="navigate('experience')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
-                        <i class="fas fa-history w-5"></i> Experience Timeline
+                    <button onclick="navigate('experience')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3" id="nav-experience">
+                        <i class="fas fa-history w-5 text-center"></i> Experience Timeline
                     </button>
                 </li>
                 <li>
-                    <button onclick="navigate('publications')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
-                        <i class="fas fa-book-open w-5"></i> Research Output
+                    <button onclick="navigate('publications')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3" id="nav-publications">
+                        <i class="fas fa-book-open w-5 text-center"></i> Research Output
                     </button>
                 </li>
                 <li>
-                    <button onclick="navigate('teaching')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3">
-                        <i class="fas fa-chalkboard-teacher w-5"></i> Teaching & Mentorship
+                    <button onclick="navigate('teaching')" class="nav-item w-full text-left px-6 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-sky-600 transition-colors flex items-center gap-3" id="nav-teaching">
+                        <i class="fas fa-chalkboard-teacher w-5 text-center"></i> Teaching & Mentorship
                     </button>
                 </li>
             </ul>
         </nav>
 
+        <!-- Sidebar Footer -->
         <div class="p-6 border-t border-slate-100">
-            <div class="flex justify-center space-x-4">
+            <div class="flex justify-center space-x-6">
                 <a href="mailto:psaurabh@uci.edu" class="text-slate-400 hover:text-sky-600 transition-colors" title="Email"><i class="fas fa-envelope fa-lg"></i></a>
                 <a href="#" class="text-slate-400 hover:text-sky-600 transition-colors" title="GitHub"><i class="fab fa-github fa-lg"></i></a>
                 <a href="https://scholar.google.com/citations?user=xwEnqfoAAAAJ&hl=en" target="_blank" class="text-slate-400 hover:text-sky-600 transition-colors" title="Google Scholar"><i class="fas fa-graduation-cap fa-lg"></i></a>
@@ -145,7 +138,7 @@
     </aside>
 
     <!-- Main Content Area -->
-    <!-- Added 'pt-16' to push content below fixed mobile header -->
+    <!-- Added pt-16 to push content down below the fixed header on mobile -->
     <main class="flex-1 overflow-y-auto bg-slate-50 p-4 md:p-8 relative w-full pt-20 md:pt-8" id="main-content">
         <!-- Content injected via JS -->
     </main>
@@ -259,14 +252,19 @@
             ],
             teaching: [
                 {
-                    role: "Invited Speaker / Lecturer",
-                    org: "Zhejiang University",
-                    loc: "China",
-                    period: "2019",
-                    desc: "Delivered specialized lecture series on topological phases.",
+                    role: "Graduate Lecturer & Teaching Assistant",
+                    org: "University of California, Irvine (UCI)",
+                    loc: "California, USA",
+                    period: "2012 – 2017",
+                    desc: "Taught advanced mathematical and quantum mechanical concepts to graduate and undergraduate students.",
                     details: [
-                        "Lecture: 'Primer in Topological Quantum Optics' at the Optics Conference.",
-                        "Trained attendees on the physical interpretation of Chern numbers in dissipative systems."
+                        "<strong>CHEM 208: Math Methods:</strong> Developed curriculum on differential equations, linear algebra, and Fourier analysis. Integrated Python/MATLAB.",
+                        "<strong>PHYS/CHEM 229A: Mathematical Methods:</strong> Taught complex variables, PDEs, and statistics with real-world case studies (circuits, wave guides).",
+                        "<strong>CHEM 231B: Applied Quantum Mechanics:</strong> Taught quantum systems, operator theory, QFT applications, and spectroscopy.",
+                        "<strong>CHEM 231C: Molecular Spectroscopy:</strong> Focused on group theory, Fourier transforms, and double-sided Feynman Diagrams.",
+                        "<strong>CHEM 131A/B/C: Physical Chemistry Series:</strong> Covered Quantum Principles, Statistical Mechanics, Thermodynamics, and Chemical Dynamics.",
+                        "<strong>CHEM 1B/1C/1P: General Chemistry Series:</strong> Taught stoichiometry, thermodynamics, kinetics, and equilibrium. Led problem-solving sessions.",
+                        "<strong>CHEM 1LC/1LD: General Chemistry Lab:</strong> Designed and guided experiments on quantitative analysis, titrations, and molecular structure."
                     ]
                 },
                 {
@@ -294,33 +292,38 @@
                     ]
                 },
                 {
-                    role: "Graduate Lecturer & Teaching Assistant",
-                    org: "University of California, Irvine (UCI)",
-                    loc: "California, USA",
-                    period: "2012 – 2017",
-                    desc: "Taught advanced mathematical and quantum mechanical concepts to graduate and undergraduate students.",
+                    role: "Invited Speaker / Lecturer",
+                    org: "Zhejiang University",
+                    loc: "China",
+                    period: "2019",
+                    desc: "Delivered specialized lecture series on topological phases.",
                     details: [
-                        "<strong>CHEM 208: Math Methods:</strong> Developed curriculum on differential equations, linear algebra, and Fourier analysis. Integrated Python/MATLAB.",
-                        "<strong>PHYS/CHEM 229A: Mathematical Methods:</strong> Taught complex variables, PDEs, and statistics with real-world case studies (circuits, wave guides).",
-                        "<strong>CHEM 231B: Applied Quantum Mechanics:</strong> Taught quantum systems, operator theory, QFT applications, and spectroscopy.",
-                        "<strong>CHEM 231C: Molecular Spectroscopy:</strong> Focused on group theory, Fourier transforms, and double-sided Feynman Diagrams.",
-                        "<strong>CHEM 131A/B/C: Physical Chemistry Series:</strong> Covered Quantum Principles, Statistical Mechanics, Thermodynamics, and Chemical Dynamics.",
-                        "<strong>CHEM 1B/1C/1P: General Chemistry Series:</strong> Taught stoichiometry, thermodynamics, kinetics, and equilibrium. Led problem-solving sessions.",
-                        "<strong>CHEM 1LC/1LD: General Chemistry Lab:</strong> Designed and guided experiments on quantitative analysis, titrations, and molecular structure."
+                        "Lecture: 'Primer in Topological Quantum Optics' at the Optics Conference.",
+                        "Trained attendees on the physical interpretation of Chern numbers in dissipative systems."
                     ]
                 }
             ]
         };
 
+        // --- GLOBAL CHART REFERENCES ---
+        // Store chart instances globally so we can destroy them before re-creating
+        let skillsChartInstance = null;
+        let focusChartInstance = null;
+
+
         // --- NAVIGATION LOGIC ---
         function navigate(viewId) {
+            // Update active state in Sidebar
             document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            const activeBtn = Array.from(document.querySelectorAll('.nav-item')).find(el => el.textContent.toLowerCase().includes(viewId.split(' ')[0]));
+            // Find button with specific ID to ensure robustness
+            const activeBtn = document.getElementById(`nav-${viewId}`);
             if(activeBtn) activeBtn.classList.add('active');
             
+            // Clear Content
             const contentDiv = document.getElementById('main-content');
             contentDiv.innerHTML = '';
             
+            // Render View
             switch(viewId) {
                 case 'dashboard': renderDashboard(contentDiv); break;
                 case 'experience': renderExperience(contentDiv); break;
@@ -330,19 +333,38 @@
                 default: renderDashboard(contentDiv);
             }
 
+            // Close mobile menu if screen is small
             if(window.innerWidth < 768) {
-                closeMobileMenu();
+                toggleMenu(false); // Force close
             }
         }
         
-        function closeMobileMenu() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobile-menu-overlay');
-            sidebar.classList.remove('open');
-            // Stick to translate toggle:
-            sidebar.classList.add('-translate-x-full');
-            overlay.classList.add('hidden');
+        // --- MOBILE MENU LOGIC ---
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('mobile-overlay');
+        const menuBtn = document.getElementById('mobile-menu-btn');
+
+        function toggleMenu(forceState) {
+            const isClosed = sidebar.classList.contains('-translate-x-full');
+            
+            // If forceState is provided (true/false), use it. Otherwise toggle.
+            const shouldOpen = forceState !== undefined ? forceState : isClosed;
+
+            if (shouldOpen) {
+                // Open
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            } else {
+                // Close
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
         }
+
+        // Event Listeners for Mobile Menu
+        if(menuBtn) menuBtn.addEventListener('click', () => toggleMenu());
+        if(overlay) overlay.addEventListener('click', () => toggleMenu(false));
+
 
         // --- RENDERERS ---
 
@@ -350,14 +372,9 @@
             container.innerHTML += `
                 <div class="mb-8">
                     <h1 class="text-3xl font-bold text-slate-800 mb-2">Executive Dashboard</h1>
+                    <!-- Profile Title Rendered Here -->
+                    <p class="text-lg font-semibold text-sky-700 mb-2">${cvData.profile.title}</p>
                     <p class="text-slate-600 max-w-3xl leading-relaxed">${cvData.profile.summary}</p>
-                </div>
-            `;
-
-            // Updated to render profile title before metrics
-            container.innerHTML += `
-                <div class="mb-6">
-                     <p class="text-xl font-semibold text-sky-700">${cvData.profile.title}</p>
                 </div>
             `;
 
@@ -367,7 +384,7 @@
                         <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm interactive-card relative overflow-hidden group">
                             <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">${key.replace(/([A-Z])/g, ' $1').trim()}</p>
                             <p class="text-2xl font-bold text-sky-600 mt-1">${value}</p>
-                            ${key === 'funding' ? `<p class="text-xs text-slate-400 mt-1 funding-detail group-hover:whitespace-normal group-hover:bg-white group-hover:absolute group-hover:z-10 group-hover:p-2 group-hover:border group-hover:shadow">${cvData.profile.fundingDetail}</p>` : ''}
+                            ${key === 'funding' ? `<p class="text-xs text-slate-400 mt-1 funding-detail w-full">${cvData.profile.fundingDetail}</p>` : ''}
                         </div>
                     `).join('')}
                 </div>
@@ -391,7 +408,11 @@
                 </div>
             `;
 
-            setTimeout(() => { initSkillsChart(); initFocusChart(); }, 0);
+            // Wait for DOM to update before drawing charts
+            setTimeout(() => { 
+                initSkillsChart(); 
+                initFocusChart(); 
+            }, 50);
         }
 
         function renderExperience(container) {
@@ -533,7 +554,12 @@
             const ctx = document.getElementById('skillsChart');
             if(!ctx) return;
             
-            new Chart(ctx, {
+            // Clean up old instance if exists
+            if (skillsChartInstance) {
+                skillsChartInstance.destroy();
+            }
+            
+            skillsChartInstance = new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: cvData.skills.labels,
@@ -557,7 +583,7 @@
                                 font: { size: 11, family: "'Inter', sans-serif" }, 
                                 color: '#475569' 
                             },
-                            // --- KEY CHANGE: ZOOMED SCALE ---
+                            // Scale optimization
                             min: 50,
                             max: 100,
                             ticks: { display: false, stepSize: 10 }
@@ -572,7 +598,12 @@
             const ctx = document.getElementById('focusChart');
             if(!ctx) return;
 
-            new Chart(ctx, {
+            // Clean up old instance if exists
+            if (focusChartInstance) {
+                focusChartInstance.destroy();
+            }
+
+            focusChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: cvData.researchFocus.labels,
@@ -599,16 +630,6 @@
         // --- INITIALIZATION ---
         
         document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('mobile-menu-btn');
-            const overlay = document.getElementById('mobile-menu-overlay');
-
-            if (btn) {
-                btn.addEventListener('click', toggleMenu);
-            }
-            if (overlay) {
-                overlay.addEventListener('click', toggleMenu);
-            }
-
             // Initial Render
             renderDashboard(document.getElementById('main-content'));
         });
